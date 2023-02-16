@@ -1,31 +1,46 @@
 <template>
-  <div>
+  <div :class="{ 'text-left q-ml-sm': !hideSide }">
     <q-separator />
-    <q-item class="text-left q-ml-sm">
+    <q-item>
       <q-item-section>
-        <q-item-label :caption="hideSide">Distances</q-item-label>
-        <q-item-label v-if="hideSide">Distances</q-item-label>
+        <q-item-label :caption="hideSide">Journey</q-item-label>
+        <q-item-label v-if="hideSide">{{ distance }} Km</q-item-label>
       </q-item-section>
-      <q-item-section v-if="!hideSide" side> 1800KM </q-item-section>
+      <q-item-section v-if="!hideSide" side> {{ distance }} Km </q-item-section>
     </q-item>
     <q-separator />
-    <q-item class="text-left q-ml-sm">
+    <q-item>
       <q-item-section>
         <q-item-label :caption="hideSide">Top Speed</q-item-label>
-        <q-item-label v-if="hideSide">Distances</q-item-label>
+        <q-item-label v-if="hideSide">{{ speed }} Km/h</q-item-label>
       </q-item-section>
-      <q-item-section v-if="!hideSide" side> 1800KM </q-item-section>
+      <q-item-section v-if="!hideSide" side> {{ speed }} Km/h </q-item-section>
     </q-item>
   </div>
 </template>
 
 <script>
+import { useCalculation } from "src/stores/storage";
+import { computed } from "@vue/runtime-core";
 export default {
   props: {
     hideSide: {
       type: Boolean,
       default: false,
     },
+  },
+  setup(props, { emit }) {
+    const store = useCalculation();
+    const speed = computed({
+      get: () => store.$state.speed,
+    });
+    const distance = computed({
+      get: () => store.$state.distance,
+    });
+    return {
+      speed,
+      distance,
+    };
   },
 };
 </script>

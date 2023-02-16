@@ -29,6 +29,9 @@
           <!-- <q-img width="90%" :src="cmp"></q-img> -->
           <compass />
         </div>
+        <div class="col-12">
+          <!-- <maps /> -->
+        </div>
       </div>
     </div>
     <div class="col-6 col-sm-5">
@@ -50,7 +53,13 @@
     <div class="col-12 text-bold" v-if="$q.screen.xs">
       <speed-info />
     </div>
-    <q-btn round style="position: absolute; top: 10px; right: 5px" color="red">
+    <q-btn
+      to="/setting"
+      outline
+      round
+      style="position: absolute; top: 15px; right: 5px"
+      color="red"
+    >
       <q-icon name="settings" class="q-mb-sm q-mr-sm"></q-icon>
     </q-btn>
   </div>
@@ -62,9 +71,12 @@ import { computed } from "@vue/runtime-core";
 import cmp from "assets/compass.png";
 import Compass from "components/Compass.vue";
 import SpeedInfo from "components/SpeedInfo.vue";
+import { useCalculation } from "src/stores/storage";
+import Maps from "src/components/Maps.vue";
 export default {
-  components: { Compass, SpeedInfo },
+  components: { Compass, SpeedInfo, Maps },
   setup() {
+    const calc = useCalculation();
     const vSpeed = ref(0);
     const vBatt = ref(0);
     return {

@@ -11,6 +11,7 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "@turf/distance": "^6.5.0",
+    "@vue-leaflet/vue-leaflet": "^0.8.3",
     "axios": "^0.21.1",
     "collect.js": "^4.34.3",
     "core-js": "^3.6.5",

@@ -7,8 +7,6 @@
   </div>
 </template>
 <script>
-import { Toast } from "@capacitor/toast";
-
 const isIOS =
   navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
   navigator.userAgent.match(/AppleWebKit/);
@@ -48,7 +46,8 @@ export default {
     // const coordinates = await Geolocation.getCurrentPosition();
     // alert(JSON.stringify(coordinates))
     navigator.geolocation.getCurrentPosition(this.locationHandler, (e) =>
-      Toast.show({ text: e.message })
+      // Toast.show({ text: e.message })
+      this.$q.notify({ message: e.message, color: "red" })
     );
     if (!isIOS) {
       window.addEventListener("deviceorientationabsolute", this.handler, true);
@@ -80,6 +79,7 @@ export default {
     locationHandler(position) {
       const { latitude, longitude } = position.coords;
       pointDegree = calcDegreeToPoint(latitude, longitude);
+      this.$emit("change", { latitude, longitude });
       if (pointDegree < 0) {
         pointDegree = pointDegree + 360;
       }
