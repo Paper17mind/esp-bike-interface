@@ -1,0 +1,71 @@
+<template>
+  <q-page class="flex flex-center">
+    <canvas id="foo"></canvas>
+    <div class="zero">0</div>
+    <div class="twohundred">200</div>
+    <div class="wrap">
+      <button onclick="chamar()">Try</button>
+      <input type="text" id="campo" />Insert a number 0 ~ 200
+    </div>
+    00
+  </q-page>
+</template>
+
+<script>
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "IndexPage",
+  setup() {
+    var opts = {
+      lines: 12, // The number of lines to draw
+      angle: 0.0, // The length of each line
+      lineWidth: 0.44, // The line thickness
+      pointer: {
+        length: 0.5, // The radius of the inner circle
+        strokeWidth: 0.035, // The rotation offset
+        color: "red", // Fill color
+      },
+      limitMax: false, // If true, the pointer will not go past the end of the gauge
+      colorStart: "blue", // Colors
+      colorStop: "#8FC0DA", // just experiment with them
+      strokeColor: "#E0E0E0", // to see which ones work best for you
+      generateGradient: true,
+    };
+    var target = document.getElementById("foo"); // your canvas element
+    // var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+    // gauge.maxValue = 200; // set max gauge value
+    // gauge.animationSpeed = 32; // set animation speed (32 is default value)
+
+    function chamar(valor) {
+      valor = document.getElementById("campo").value;
+      gauge.set(valor); // set actual value
+    }
+  },
+});
+</script>
+<style scoped>
+/* *{
+  margin:0;
+  padding:0;
+} */
+#foo {
+  height: 200px;
+  width: 400px;
+}
+.wrap {
+  position: absolute;
+  top: 210px;
+  left: 50px;
+}
+.zero {
+  position: absolute;
+  top: 165px;
+  left: 80px;
+}
+.twohundred {
+  position: absolute;
+  top: 165px;
+  left: 280px;
+}
+</style>
