@@ -109,10 +109,11 @@ body {
 
 .compass {
   position: relative;
-  width: 100%;
-  height: 170px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.555);
   margin: auto;
 }
 

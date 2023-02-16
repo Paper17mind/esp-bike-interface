@@ -1,67 +1,71 @@
 <template>
-  <div class="row q-col-gutter-sm text-center q-pt-md">
-    <div class="col-12">
-      <!-- {{ $q.screen.width }} -->
+  <div style="width: 100vw; overflow: auto; height: 100vh">
+    <div
+      style="position: absolute; opacity: 0.6; top: 0px; left: 0px; z-index: 0"
+      v-if="showMap"
+    >
+      <maps />
     </div>
-    <div class="col-12 col-sm-5">
-      <q-knob
-        :angle="180"
-        v-model="vSpeed"
-        :size="$q.screen.width > 400 ? '240px' : '310px'"
-        :thickness="0.12"
-        :color="cSpeed"
-        track-color="grey-3"
-        class="q-ma-md glow"
-        show-value
-      >
-        <div>
-          {{ vSpeed }}
-          <div class="text-h5">Km/H</div>
-        </div>
-      </q-knob>
-    </div>
-    <div class="col-6 col-sm-2">
-      <div class="row q-col-gutter-xs">
-        <div v-if="$q.screen.gt.xs" class="col-12">
-          <speed-info :hideSide="true" />
-        </div>
-        <div class="col-12">
-          <!-- <q-img width="90%" :src="cmp"></q-img> -->
-          <compass />
-        </div>
-        <div class="col-12">
-          <!-- <maps /> -->
+    <div class="row text-center q-pt-md" :class="{ 'q-pa-sm': !showMap }">
+      <div class="col-12 col-sm-4">
+        <q-knob
+          :angle="180"
+          v-model="vSpeed"
+          :size="$q.screen.width > 400 ? '240px' : '310px'"
+          :thickness="0.12"
+          :color="cSpeed"
+          center-color="grey-9"
+          track-color="grey-3"
+          class="q-ma-md glow"
+          show-value
+        >
+          <div>
+            {{ vSpeed }}
+            <div class="text-h5">Km/H</div>
+          </div>
+        </q-knob>
+      </div>
+      <div class="col-6 col-sm-4">
+        <div class="row q-col-gutter-xs">
+          <div v-if="$q.screen.gt.xs" class="col-12">
+            <speed-info :hideSide="true" />
+          </div>
+          <div class="col-12">
+            <!-- <q-img width="90%" :src="cmp"></q-img> -->
+            <compass @change="setCoord" />
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-6 col-sm-5">
-      <q-knob
-        :angle="180"
-        :max="46"
-        v-model="vBatt"
-        show-value
-        :size="$q.screen.gt.xs ? '250px' : '120px'"
-        reverse
-        :thickness="0.12"
-        :color="cBatt"
-        track-color="grey"
-        class="q-ma-md glow"
+      <div class="col-6 col-sm-4">
+        <q-knob
+          :angle="180"
+          :max="46"
+          v-model="vBatt"
+          show-value
+          :size="$q.screen.gt.xs ? '250px' : '120px'"
+          reverse
+          :thickness="0.12"
+          center-color="grey-9"
+          :color="cBatt"
+          track-color="grey"
+          class="q-ma-md glow"
+        >
+          <div>{{ vBatt }} <small>V</small></div>
+        </q-knob>
+      </div>
+      <div class="col-12 text-bold" v-if="$q.screen.xs">
+        <speed-info />
+      </div>
+      <q-btn
+        to="/setting"
+        outline
+        round
+        style="position: absolute; top: 15px; right: 5px"
+        color="red"
       >
-        <div>{{ vBatt }} <small>V</small></div>
-      </q-knob>
+        <q-icon name="settings" class=""></q-icon>
+      </q-btn>
     </div>
-    <div class="col-12 text-bold" v-if="$q.screen.xs">
-      <speed-info />
-    </div>
-    <q-btn
-      to="/setting"
-      outline
-      round
-      style="position: absolute; top: 15px; right: 5px"
-      color="red"
-    >
-      <q-icon name="settings" class="q-mb-sm q-mr-sm"></q-icon>
-    </q-btn>
   </div>
 </template>
 
@@ -83,12 +87,18 @@ export default {
       vSpeed,
       vBatt,
       cmp,
+      showMap: computed({
+        get: () => calc.$state.showMap,
+      }),
       cBatt: computed({
         get: () => (vBatt.value > 35 ? "green" : "orange"),
       }),
       cSpeed: computed({
         get: () => (vSpeed.value < 35 ? "green-6" : "red-9"),
       }),
+      setCoord(e) {
+        calc.$state.coords = e;
+      },
     };
   },
 };

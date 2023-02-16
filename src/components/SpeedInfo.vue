@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'text-left q-ml-sm': !hideSide }">
+  <div :class="{ 'text-left q-ml-sm': !hideSide, 'q-mb-xl q-pb-xl': hideSide }">
     <q-separator />
     <q-item>
       <q-item-section>
@@ -16,6 +16,7 @@
       </q-item-section>
       <q-item-section v-if="!hideSide" side> {{ speed }} Km/h </q-item-section>
     </q-item>
+    <q-separator />
   </div>
 </template>
 

@@ -25,6 +25,24 @@
         </q-item>
       </div>
       <div class="col-12">
+        <q-item tag="label" v-ripple>
+          <q-item-section avatar>
+            <q-checkbox
+              checked-icon="my_location"
+              unchecked-icon="location_disabled"
+              dense
+              v-model="showMap"
+              :val="true"
+              color="teal"
+            />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Map</q-item-label>
+            <q-item-label caption>Tampilkan map</q-item-label>
+          </q-item-section>
+        </q-item>
+      </div>
+      <div class="col-12">
         <q-item clickable to="/histories">
           <q-item-section avatar>
             <q-icon name="history"></q-icon>
@@ -59,9 +77,14 @@ export default defineComponent({
       get: () => store.$state.auth,
       set: (v) => (store.$state.auth = v),
     });
+    const showMap = computed({
+      get: () => store.$state.showMap,
+      set: (v) => (store.$state.showMap = v),
+    });
     return {
       ip,
       pin,
+      showMap,
       onPin(e) {
         if (!pin.value) return;
         pin.value = pin.value.substring(0, 6);

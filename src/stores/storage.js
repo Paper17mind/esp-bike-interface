@@ -4,6 +4,7 @@ export const useCalculation = defineStore("distance", {
   state: () => ({
     distance: 0,
     speed: 0,
+    showMap: true,
     latLongs: [],
     coords: {},
     ip: null,
